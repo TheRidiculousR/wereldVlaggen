@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>lettertype chaos</title>
+        <style>
+            textarea{
+                width: calc( 100vw - 25px);
+                height: 40vh;
+            }
+        </style>
+    </head>
+    <body>
+        <label for="input"> input </label>
+        <textarea name='input' id="input" > </textarea>
+        
+        <button onclick="randomiseFont(document.getElementById('input').value)"> randomise font</button>
+
+        <div id="output"></div>
+    <script>
+        //array met standaard fonts die elke webbrowser zou moeten ondersteunen
+        const lettertypeArray = [ 'Arial', 'Verdana','Helvetica','Tahoma','Trebuchet','Times New Roman','Trebuchet MS','Georgia','Garamond','Courier New','Brush Script MT'];
+        //omdat de random font gekozen word door middel van de lengte van de array, kunnen er zonder problemen meer fonts worden toegevoegd
+       
+        let previousRandom = 0;
+        let random = 0;
+
+        function randomiseFont(input){
+        let output = ''    
+            for (let length = 0 ; length < input.length ; length++){
+                output += '<h style="' + "font-family:'" + getRandomFont() + "', serif;" + '">';
+                output += input.substring(length, length+1);
+                output += "</h>"
+            }
+            document.getElementById('output').innerHTML = output
+        }
+
+        function getRandomFont(){
+            
+            while(random == previousRandom){
+                random = Math.floor(Math.random()*(lettertypeArray.length-1))
+            }
+            previousRandom = random;
+            return lettertypeArray[random];          
+        }
+    </script>
+    
+    </body>
+
+</html>
