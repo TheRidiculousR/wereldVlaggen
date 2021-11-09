@@ -7,41 +7,285 @@
                 width: calc( 100vw - 25px);
                 height: 40vh;
             }
+            body{
+                background-color: rgb(200, 225, 255)
+            }
+            .flag{
+                background-size: 90%;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 128px;
+                height: 100px;
+                border: solid gray 3px;
+                border-radius: 15px;
+                display:inline-block;
+                margin: 5px
+            }
         </style>
     </head>
     <body>
-        <label for="input"> input </label>
-        <textarea name='input' id="input" > </textarea>
-        
-        <button onclick="randomiseFont(document.getElementById('input').value)"> randomise font</button>
-
-        <div id="output"></div>
     <script>
-        //array met standaard fonts die elke webbrowser zou moeten ondersteunen
-        const lettertypeArray = [ 'Arial', 'Verdana','Helvetica','Tahoma','Trebuchet','Times New Roman','Trebuchet MS','Georgia','Garamond','Courier New','Brush Script MT'];
-        //omdat de random font gekozen word door middel van de lengte van de array, kunnen er zonder problemen meer fonts worden toegevoegd
-       
-        let previousRandom = 0;
-        let random = 0;
-
-        function randomiseFont(input){
-        let output = ''    
-            for (let length = 0 ; length < input.length ; length++){
-                output += '<h style="' + "font-family:'" + getRandomFont() + "', serif;" + '">';
-                output += input.substring(length, length+1);
-                output += "</h>"
-            }
-            document.getElementById('output').innerHTML = output
-        }
-
-        function getRandomFont(){
-            
-            while(random == previousRandom){
-                random = Math.floor(Math.random()*(lettertypeArray.length-1))
-            }
-            previousRandom = random;
-            return lettertypeArray[random];          
-        }
+        //dit schrijven was een minder fijne ervaring
+        var flagArray = 
+        ['ad',
+        'ae',
+        'af',
+        'ag',
+        'ai',
+        'al',
+        'am',
+        'ao',
+        'aq',
+        'ar',
+        'as',
+        'at',
+        'au',
+        'aw',
+        'ax',
+        'az',
+        'ba',
+        'bb',
+        'bd',
+        'be',
+        'bf',
+        'bg',
+        'bh',
+        'bi',
+        'bj',
+        'bl',
+        'bm',
+        'bn',
+        'bo',
+        'bq',
+        'br',
+        'bs',
+        'bt',
+        'bv',
+        'bw',
+        'by',
+        'bz',
+        'ca',
+        'cc',
+        'cd',
+        'cf',
+        'cg',
+        'ch',
+        'ci',
+        'ck',
+        'cl',
+        'cm',
+        'cn',
+        'co',
+        'cr',
+        'cu',
+        'cv',
+        'cw',
+        'cx',
+        'cy',
+        'cz',
+        'de',
+        'dj',
+        'dk',
+        'dm',
+        'do',
+        'dz',
+        'ec',
+        'ee',
+        'eg',
+        'eh',
+        'er',
+        'es',
+        'et',
+        'fi',
+        'fj',
+        'fk',
+        'fm',
+        'fo',
+        'fr',
+        'ga',
+        'gb',
+        'gb-eng',
+        'gb-nir',
+        'gb-sct',
+        'gb-wls',
+        'gd',
+        'ge',
+        'gf',
+        'gg',
+        'gh',
+        'gi',
+        'gl',
+        'gm',
+        'gn',
+        'gp',
+        'gq',
+        'gr',
+        'gs',
+        'gt',
+        'gu',
+        'gw',
+        'gy',
+        'hk',
+        'hm',
+        'hn',
+        'hr',
+        'ht',
+        'hu',
+        'id',
+        'ie',
+        'il',
+        'im',
+        'in',
+        'io',
+        'iq',
+        'ir',
+        'is',
+        'it',
+        'je',
+        'jm',
+        'jo',
+        'jp',
+        'ke',
+        'kg',
+        'kh',
+        'ki',
+        'km',
+        'kn',
+        'kp',
+        'kr',
+        'kw',
+        'ky',
+        'kz',
+        'la',
+        'lb',
+        'lc',
+        'li',
+        'lk',
+        'lr',
+        'ls',
+        'lt',
+        'lu',
+        'lv',
+        'ly',
+        'ma',
+        'mc',
+        'md',
+        'me',
+        'mf',
+        'mg',
+        'mh',
+        'mk',
+        'ml',
+        'mm',
+        'mn',
+        'mo',
+        'mp',
+        'mq',
+        'mr',
+        'ms',
+        'mt',
+        'mu',
+        'mv',
+        'mw',
+        'mx',
+        'my',
+        'mz',
+        'na',
+        'nc',
+        'ne',
+        'nf',
+        'ni',
+        'nl',
+        'no',
+        'np',
+        'nr',
+        'nu',
+        'nz',
+        'om',
+        'pa',
+        'pe',
+        'pf',
+        'pg',
+        'ph',
+        'pk',
+        'pl',
+        'pm',
+        'pn',
+        'pr',
+        'ps',
+        'pt',
+        'pw',
+        'py',
+        'qa',
+        're',
+        'ro',
+        'rs',
+        'ru',
+        'rw',
+        'sa',
+        'sb',
+        'sc',
+        'sd',
+        'se',
+        'sg',
+        'sh',
+        'si',
+        'sj',
+        'sk',
+        'sl',
+        'sm',
+        'sn',
+        'so',
+        'sr',
+        'ss',
+        'st',
+        'sv',
+        'sx',
+        'sy',
+        'sz',
+        'tc',   
+        'td',
+        'tf',
+        'tg',
+        'th',
+        'tj',
+        'tk',
+        'tl',
+        'tm',
+        'tn',
+        'to',
+        'tr',
+        'tt',
+        'tv',
+        'tw',
+        'tz',
+        'ua',
+        'ug',
+        'um',
+        'us',
+        'uy',
+        'uz',
+        'va',
+        'vc',
+        've',
+        'vg',
+        'vi',
+        'vn',
+        'vu',
+        'wf',
+        'ws',
+        'xk',
+        'ye',
+        'yt',
+        'za',
+        'zm',
+        'zw'   
+    ]
+        
+        for (let loop = 0 ; loop < flagArray.length ; loop++){
+            let flag = flagArray[loop]
+            document.write("<div class='flag ," + flag + " ' style='background-image:url(" + '"images/' + flag + '.png")'+ "'></div>")
+        }    
     </script>
     
     </body>
