@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>lettertype chaos</title>
+        <title>wereld vlaggen</title>
         <style>
             textarea{
                 width: calc( 100vw - 25px);
@@ -14,16 +14,35 @@
                 background-size: 90%;
                 background-position: center;
                 background-repeat: no-repeat;
+                width: 122px;
+                height: 94px;
+                border: solid white 6px;
+                border-radius: 15px;               
+                margin: 5px
+            }
+            .flag:hover{
                 width: 128px;
                 height: 100px;
-                border: solid gray 3px;
-                border-radius: 15px;
+                border: solid white 3px;
+                background-color: rgba(255,255,255,50%);
+            }
+            .backdrop{
+                border-radius: 15px; 
                 display:inline-block;
-                margin: 5px
+                background: linear-gradient(rgb(200, 225, 255),rgb(64, 200, 255))
+            }
+            #hoverText{
+                padding: 5px;
+                border: 3px solid gray;
+                border-radius: 15px;
+                position: fixed;
+                background-color: white;
+                font-family: Arial, Helvetica, sans-serif;
             }
         </style>
     </head>
     <body>
+        <div id="hoverText">test</div>
     <script>
         //dit schrijven was een minder fijne ervaring
         var flagArray = 
@@ -104,10 +123,11 @@
         'fr',
         'ga',
         'gb',
-        'gb-eng',
-        'gb-nir',
-        'gb-sct',
-        'gb-wls',
+        //deze geven errors om een of andere reden
+        //'gb-eng',       
+        //'gb-nir',
+        //'gb-sct',
+        //'gb-wls',
         'gd',
         'ge',
         'gf',
@@ -284,8 +304,19 @@
         
         for (let loop = 0 ; loop < flagArray.length ; loop++){
             let flag = flagArray[loop]
-            document.write("<div class='flag ," + flag + " ' style='background-image:url(" + '"images/' + flag + '.png")'+ "'></div>")
-        }    
+            document.write("<div class='backdrop'><div id='"+flag+"'class='flag " + flag + " ' style='background-image:url(" + '"images/' + flag + '.png")'+ "'></div></div>");
+           
+            document.getElementById(flag).addEventListener("mouseover", function(event){
+                displayCountryName(event.target);
+            });
+        }      
+        function displayCountryName(object){
+            //dit schijnt niet te werken in alle browsers, ik had wijnig zin om nog een volledige array te schrijven
+            let countryCode = object.classList[1].toUpperCase();
+            let regionNames = new Intl.DisplayNames(['en'], {type: 'region'});
+            
+            document.getElementById("hoverText").innerText = regionNames.of(countryCode);
+        }
     </script>
     
     </body>
