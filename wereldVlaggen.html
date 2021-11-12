@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
         <title>wereld vlaggen</title>
         <style>
             textarea{
@@ -31,7 +33,7 @@
                 display:inline-block;
                 background: linear-gradient(rgb(200, 225, 255),rgb(64, 200, 255))
             }
-            #hoverText{
+            #hoverText, img, #LanguageMenu {
                 padding: 5px;
                 border: 3px solid gray;
                 border-radius: 15px;
@@ -39,10 +41,59 @@
                 background-color: white;
                 font-family: Arial, Helvetica, sans-serif;
             }
+            img{
+                position: relative;
+                height: 32px;              
+            }
+            #SettingsButton{
+                margin-left: calc(100vw - 80px);
+                position: fixed;
+            }
+            img:hover{
+                background: linear-gradient(rgb(255, 255, 255),rgb(200, 225, 160),rgb(128, 255, 64));
+                padding: 0;
+                height: 42px;
+                border-color: white;
+            }
+            #LanguageMenu{
+                margin-left: 100vw;
+                margin-top: 64px;
+                padding-left: 25px;
+                padding-right: 100px;
+                padding-bottom: 20px;   
+                animation-duration: 0.4s;            
+            }
+            @keyframes menuSlideIn{
+                0%{
+                    margin-left: 100vw;
+                }
+                100%{
+                    margin-left: calc(100vw - 160px);
+                }
+            }
+            @keyframes menuSlideOut{              
+                0%{
+                    margin-left: calc(100vw - 160px);
+                }
+                100%{
+                    margin-left: 100vw;
+                }
+            }
+           
         </style>
     </head>
     <body>
-        <div id="hoverText">test</div>
+        <div id="hoverText"></div>
+        <img onClick="toggleMenu(document.getElementById('LanguageMenu'))" src="images/settings.png" alt="settings" id="SettingsButton">
+       
+        <div id="LanguageMenu">
+            <br>
+            language / taal 
+            <br><br>
+            <img onClick="selectLanguage('en', this)" class="lang" src="images/gb.png" alt="english" id="LanguageEN">
+            <br>
+            <img onClick="selectLanguage('en', this)" class="lang" src="images/nl.png" style="filter:brightness(1.25); border-color:rgb(128, 255, 64);" alt="english" id="LanguageNL">
+        </div>
     <script>
         //dit schrijven was een minder fijne ervaring
         var flagArray = 
@@ -306,6 +357,7 @@
             let flag = flagArray[loop]
             document.write("<div class='backdrop'><div id='"+flag+"'class='flag " + flag + " ' style='background-image:url(" + '"images/' + flag + '.png")'+ "'></div></div>");
            
+            //wanneer je over een vlag heen hovert, komt de naam links boven in de hoek
             document.getElementById(flag).addEventListener("mouseover", function(event){
                 displayCountryName(event.target);
             });
@@ -313,10 +365,36 @@
         function displayCountryName(object){
             //dit schijnt niet te werken in alle browsers, ik had wijnig zin om nog een volledige array te schrijven
             let countryCode = object.classList[1].toUpperCase();
-            let regionNames = new Intl.DisplayNames(['en'], {type: 'region'});
+            let regionNames = new Intl.DisplayNames([language], {type: 'region'});
             
             document.getElementById("hoverText").innerText = regionNames.of(countryCode);
         }
+        let IsMenuVisible = false;
+        function toggleMenu(menu) {
+            IsMenuVisible = !IsMenuVisible;
+            if(IsMenuVisible){
+                showMenu(menu);
+            }else{
+                hideMenu(menu);
+            }
+        }
+        function showMenu(menu){
+            menu.style = "animation-name: menuSlideIn;  animation-iteration-count: 1; margin-left: calc(100vw - 160px);"
+        }	
+        function hideMenu(menu){
+            menu.style = "animation-name: menuSlideOut;  animation-iteration-count: 1; margin-left: 100vw;"
+        }
+
+        let language = 'nl'
+
+        function selectLanguage(input, object){
+            language = input;
+            for(let loop = 0 ; loop < document.querySelectorAll(".lang").length ; loop++){
+                document.querySelectorAll(".lang")[loop].style = '';                
+            }
+            object.style = "filter:brightness(1.25); border-color:rgb(128, 255, 64);"
+        }	
+
     </script>
     
     </body>
